@@ -115,7 +115,7 @@
 
             const timeRemaining = calculateTimeRemaining(targetDate);
 
-            document.getElementById('countdown').innerHTML = `${timeRemaining.days}:${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`;
+            document.getElementById('countdown').innerHTML = `${timeRemaining.days} : ${timeRemaining.hours} : ${timeRemaining.minutes} : ${timeRemaining.seconds}`;
 
             if (timeRemaining.days === 0 && timeRemaining.hours === '00' && timeRemaining.minutes === '00' && timeRemaining.seconds === '00') {
                 document.getElementById('countdown').innerHTML = "Contagem regressiva encerrada!";
@@ -128,6 +128,20 @@
 
         // Atualiza a contagem regressiva imediatamente ao carregar a página
         updateCountdown();
+
+        function keepAwake() {
+            // Função que será chamada repetidamente usando requestAnimationFrame
+            // Aqui, você pode realizar as operações que manterão o navegador "acordado"
+
+            // Exemplo: Imprimir a hora atual no console
+            console.log(new Date());
+
+            // Chama novamente a função keepAwake na próxima renderização
+            requestAnimationFrame(keepAwake);
+        }
+
+        // Inicia o processo de manter o navegador "acordado"
+        requestAnimationFrame(keepAwake);
     </script>
 
 </body>
