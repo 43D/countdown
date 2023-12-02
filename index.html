@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown GTA VI</title>
+    <style>
+        @font-face {
+            font-family: 'GTAArtDeco';
+            src: url('GTAArtDeco_400.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'GTAArtDeco', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        #background {
+            background: #000;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            width: 100vw;
+            height: 100vh;
+            background-image: url("b.jpg");
+        }
+
+        #alert {
+            background: #2e2e3600;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px #00000091;
+            backdrop-filter: blur(4.8px);
+            -webkit-backdrop-filter: blur(4.8px);
+            border: 1px solid #a885b1;
+            transform: translate(-50%, -50%) !important;
+            left: 50% !important;
+            top: 50% !important;
+            position: absolute !important;
+            padding: 20px 50px;
+        }
+
+        .background-container {
+            margin-top: 35vh;
+            height: 65vh;
+            overflow: hidden;
+            position: relative;
+            width: 100vw;
+        }
+
+        .background-image-l {
+            height: 100%;
+            position: absolute;
+            bottom: 0;
+            left: -60px;
+        }
+
+        .background-image-r {
+            height: 100%;
+            position: absolute;
+            bottom: 0;
+            right: -60px;
+        }
+
+        #countdown {
+            font-size: xx-large;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="background">
+        <div class="background-container">
+            <img class="background-image-l" src="l.png" alt="Imagem de fundo">
+            <img class="background-image-r" src="r.png" alt="Imagem de fundo">
+        </div>
+        <div id="alert" class="position-absolute top-50 start-50 translate-middle px-5 py-1">
+            <div id="countdown"></div>
+        </div>
+    </div>
+
+    <script>
+        function formatTwoDigits(number) {
+            return number < 10 ? '0' + number : number;
+        }
+
+        function calculateTimeRemaining(targetDate) {
+            const now = new Date();
+            const target = new Date(targetDate);
+
+            if (now > target) {
+                // Adiciona um dia se a data-alvo já passou hoje
+                target.setDate(target.getDate() + 1);
+            }
+
+            const timeDifference = target - now;
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = formatTwoDigits(Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            const minutes = formatTwoDigits(Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)));
+            const seconds = formatTwoDigits(Math.floor((timeDifference % (1000 * 60)) / 1000));
+
+            return { days, hours, minutes, seconds };
+        }
+
+        function updateCountdown() {
+            const targetDate = "2023-12-05T11:00:00-03:00"; // Terça-feira, 5 de dezembro de 2023, às 11h no horário de Brasília
+
+            const timeRemaining = calculateTimeRemaining(targetDate);
+
+            document.getElementById('countdown').innerHTML = `${timeRemaining.days}:${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`;
+
+            if (timeRemaining.days === 0 && timeRemaining.hours === '00' && timeRemaining.minutes === '00' && timeRemaining.seconds === '00') {
+                document.getElementById('countdown').innerHTML = "Contagem regressiva encerrada!";
+                clearInterval(countdownInterval);
+            }
+        }
+
+        // Atualiza a contagem regressiva a cada segundo
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Atualiza a contagem regressiva imediatamente ao carregar a página
+        updateCountdown();
+    </script>
+
+</body>
+
+</html>
