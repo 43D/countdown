@@ -87,6 +87,27 @@
         </div>
     </div>
 
+    <video id="video" src="audio.mp4" loop preload="auto" autoplay muted></video>
+
+    <script>
+        const v = document.getElementById("video");
+        v.onloadeddata = () => {
+            v.play();
+        };
+
+        function primeiraInteracao() {
+            // Adicione aqui a lógica para ativar o áudio do vídeo
+            v.muted = false;  // Ativa o áudio do vídeo
+            v.play();        // Inicia a reprodução do vídeo
+            v.volume = 0.15;
+        }
+
+        // Adiciona um ouvinte de eventos para detectar a primeira interação
+        document.addEventListener('click', primeiraInteracao, { once: true });
+        document.addEventListener('keydown', primeiraInteracao, { once: true });
+        document.addEventListener('touchstart', primeiraInteracao, { once: true });
+    </script>
+
     <script>
         function formatTwoDigits(number) {
             return number < 10 ? '0' + number : number;
@@ -115,7 +136,7 @@
 
             const timeRemaining = calculateTimeRemaining(targetDate);
 
-            document.getElementById('countdown').innerHTML = `${timeRemaining.days} : ${timeRemaining.hours} : ${timeRemaining.minutes} : ${timeRemaining.seconds}`;
+            document.getElementById('countdown').innerHTML = `0${timeRemaining.days}:${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`;
 
             if (timeRemaining.days === 0 && timeRemaining.hours === '00' && timeRemaining.minutes === '00' && timeRemaining.seconds === '00') {
                 document.getElementById('countdown').innerHTML = "Contagem regressiva encerrada!";
